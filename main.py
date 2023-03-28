@@ -59,9 +59,15 @@ def record_valves(valve:int, state: int,delay:int):
 def connect_robot():
     connect()
 
+@app.get('/clear')
+def clear_seq():
+    with open('seq.json','w') as f:
+        json.dump([],f,)
+
 
 @app.get('/run/seq')
 def run_sequence():
+    connect()
 
     unlockRobot()
 
