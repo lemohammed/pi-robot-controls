@@ -16,26 +16,13 @@ def connect():
 def home():
     robot.MoveJoints(0, 0, 0, 0, 0, 0)
 
-
-def pickLayer(location):
-    robot.MoveJoints(*location)
-
-
 def unlockRobot():
     robot.DeactivateRobot()
     robot.ActivateRobot()
 
-
-def rotateLayer():
-    joints = (robot.GetJoints())
-    robot.MoveJoints(*[*joints[:-3], 100, 100, 0])
-    robot.MoveJoints(*[*joints[:-3], -100, -100, 0])
-
-
 def disconnect():
     robot.DeactivateRobot()
     robot.Disconnect()
-
 
 def pick():
     robot.MoveLinRelWrf(0, 0, -200, 0, 0, 0)
@@ -74,3 +61,4 @@ def runAutomation():
 
     moveTo([0, 0, 0, 0, 0, 0])
     moveTo(P3)
+    home()

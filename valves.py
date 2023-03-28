@@ -18,6 +18,13 @@ class Valve():
 
 class ValveManager:
     is_init = False
+    @staticmethod
+    def all_off():
+        pins = [ValveManager.LEFT(), ValveManager.RIGHT(),ValveManager.BASE()]
+        for pin in pins: pin.off()
+    def all_on(): 
+        pins = [ValveManager.LEFT(), ValveManager.RIGHT(), ValveManager.BASE()]
+        for pin in pins: pin.on()
 
     @staticmethod
     def LEFT():
