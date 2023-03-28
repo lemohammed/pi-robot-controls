@@ -31,21 +31,45 @@ def deactivateRobot():
     robot.DeactivateRobot()
 
 @app.get('/record/joints')
-def record_joins():
+def record_joints():
     l = robot.GetJoints()
 
     with open('seq.json','r') as f:
-        data = json.read(f)
+        data = json.load(f)
 
     with open('seq.json','w') as f:
-        json.dump(l,[*data,f])
+        json.dump([*data,l],f,)
 
     return l
 
 
+
+@app.get('/record/valve')
+def record_valves(valve:int, state: int,delay:int):
+    l=[valve,state,delay]
+    with open('seq.json','r') as f:
+        data = json.load(f)
+
+    with open('seq.json','w') as f:
+        json.dump([*data,l],f,)
+    return l
+
+
+@app.get('/connect')
+def connect_robot():
+    connect()
+
+
 @app.get('/run/seq')
 def run_sequence():
+
+    unlockRobot()
+
     with open('seq.json','r') as f:
-        data = json.read(f)
-    for joint in joins:
-        robot.MoveJoints(*joints)
+        data = json.load(f)
+        
+    for seq in data:
+        if (len(seq) == 3):
+            ValveManager.run(*seq)
+        else:
+            robot.MoveJoints(*seq)

@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-
+from time import sleep
 
 class Valve():
 
@@ -15,8 +15,25 @@ class Valve():
     def off(self):
         GPIO.output(self.pin, GPIO.LOW)
 
+    def toggle_state(self,state):
+        GPIO.output(self.pin, GPIO.LOW if state else GPIO.HIGH)
+        
+
 
 class ValveManager:
+    
+    @staticmethod
+    def run(valve,state,delay):
+        ValveManager.init()
+        valve_map = {
+        1: ValveManager.LEFT(),
+        2: ValveManager.RIGHT(),
+        3: ValveManager.BASE(),
+        }
+        
+        valve_map[valve].toggle_state(state)
+        sleep(delay)
+
     is_init = False
     @staticmethod
     def all_off():
