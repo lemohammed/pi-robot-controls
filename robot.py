@@ -6,7 +6,6 @@ from time import sleep
 
 robot = mdr.Robot()
 
-
 def connect():
     robot.Connect(address='192.168.0.100',
                   disconnect_on_exception=False, enable_synchronous_mode=True)
@@ -31,11 +30,6 @@ def rotateLayer():
     joints = (robot.GetJoints())
     robot.MoveJoints(*[*joints[:-3], 100, 100, 0])
     robot.MoveJoints(*[*joints[:-3], -100, -100, 0])
-
-
-def main():
-    unlockRobot()
-    pickLayer()
 
 
 def disconnect():
@@ -74,10 +68,9 @@ def runAutomation():
     unlockRobot()
     sleep(1)
     moveTo([0, 0, 0, 0, 0, 0])
-    for i in range(3):
+    for _ in range(3):
         robot.MoveJoints(*P1)
         robot.MoveJoints(*P2)
-    #     sleep(1)
 
     moveTo([0, 0, 0, 0, 0, 0])
     moveTo(P3)
