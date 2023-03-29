@@ -21,24 +21,28 @@ class Valve():
 
 
 class ValveManager:
+    is_init = False
     
     @staticmethod
     def run(valve,state,delay):
         ValveManager.init()
+        
         valve_map = {
-            1: ValveManager.LEFT(),
-            2: ValveManager.RIGHT(),
+            1: ValveManager.RIGHT(),
+            2: ValveManager.LEFT(),
             3: ValveManager.BASE(),
         }
         
         valve_map[valve].toggle_state(state)
         sleep(delay)
 
-    is_init = False
+    
+    
     @staticmethod
     def all_off():
         pins = [ValveManager.LEFT(), ValveManager.RIGHT(),ValveManager.BASE()]
         for pin in pins: pin.off()
+        
     def all_on(): 
         pins = [ValveManager.LEFT(), ValveManager.RIGHT(), ValveManager.BASE()]
         for pin in pins: pin.on()

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from robot import unlockRobot, runAutomation, connect, robot
+from robot import unlockRobot, runAutomation, connect, robot, home
 from valves import ValveManager
 import json
 
@@ -65,9 +65,14 @@ def clear_seq():
         json.dump([],f,)
 
 
+@app.get('/home')
+def go_home():
+    home()
+
 @app.get('/run/seq')
 def run_sequence():
     connect()
+    home()
 
     unlockRobot()
 
